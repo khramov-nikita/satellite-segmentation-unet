@@ -10,8 +10,18 @@
 
 Синтетический land-cover датасет + U-Net (TensorFlow/Keras).
 
+### Консольное меню (рекомендуется)
+
 ```bash
 python -m pip install -r requirements.txt
+python src/console_app.py
+```
+
+В меню: генерация датасета, обучение, оценка, визуализация или полный пайплайн.
+
+### Запуск скриптов по отдельности
+
+```bash
 python src/generate_dataset.py --train 140 --val 30 --test 30
 python src/train.py --epochs 20 --batch-size 4
 python src/evaluate.py
@@ -25,5 +35,6 @@ python src/visualize.py --n 3
 | Путь | Назначение |
 |------|------------|
 | `src/` | исходники прототипа |
+| `src/console_app.py` | консольное меню |
 | `experiment/data/` | train/val/test патчи |
 | `experiment/outputs/` | артефакты обучения |

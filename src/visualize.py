@@ -10,6 +10,7 @@ import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
+from matplotlib.patches import Patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
@@ -25,6 +26,15 @@ def colorize_mask(mask: np.ndarray) -> np.ndarray:
     for cls, color in CLASS_COLORS.items():
         rgb[mask == cls] = color
     return rgb
+
+
+def build_class_legend_handles() -> list[Patch]:
+    """Создаёт цветные маркеры легенды (квадрат + имя класса)."""
+    handles = []
+    for cls, name in enumerate(CLASS_NAMES):
+        rgb = np.array(CLASS_COLORS[cls], dtype=np.float64) / 255.0
+        handles.append(Patch(facecolor=rgb, edgecolor="black", linewidth=0.8, label=name))
+    return handles
 
 
 def main() -> None:
@@ -50,7 +60,7 @@ def main() -> None:
         pred_cls = np.argmax(pred, axis=-1).astype(np.int32)
         err = (mask != pred_cls).astype(np.uint8) * 255
 
-        fig, axes = plt.subplots(1, 4, figsize=(14, 4))
+        fig, axes = plt.subplots(1, 4, figsize=(14, 4.6))
         axes[0].imshow(image)
         axes[0].set_title("Снимок")
         axes[1].imshow(colorize_mask(mask))
@@ -61,19 +71,29 @@ def main() -> None:
         axes[3].set_title("Ошибки")
         for ax in axes:
             ax.axis("off")
-        fig.suptitle(" | ".join(CLASS_NAMES), fontsize=9)
-        fig.tight_layout()
+
+        handles = build_class_legend_handles()
+        fig.legend(
+            handles=handles,
+            loc="upper center",
+            ncol=len(CLASS_NAMES),
+            fontsize=9,
+            frameon=True,
+            title="Легенда классов",
+            bbox_to_anchor=(0.5, 1.02),
+        )
+        fig.tight_layout(rect=[0, 0, 1, 0.88])
         out_path = args.out / f"viz_test_{i + 1}.png"
-        fig.savefig(out_path, dpi=150)
+        fig.savefig(out_path, dpi=150, bbox_inches="tight")
         plt.close(fig)
         print(f"saved {out_path}")
 
-    # легенда
+    # отдельный файл легенды для приложений
     legend = np.zeros((60, 500, 3), dtype=np.uint8)
     x = 10
     for cls, name in enumerate(CLASS_NAMES):
         color = CLASS_COLORS[cls]
-        cv2.rectangle(legend, (x, 15), (x + 30, 45), color[::-1], -1)  # BGR for cv2
+        cv2.rectangle(legend, (x, 15), (x + 30, 45), color[::-1], -1)
         cv2.putText(
             legend,
             name,
