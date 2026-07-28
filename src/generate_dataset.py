@@ -13,7 +13,7 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from classes import CLASS_NAMES, NUM_CLASSES
-from io_utils import imwrite_mask, imwrite_rgb
+from io_utils import imwrite_mask, imwrite_rgb, print_as_list
 
 
 def _fill_background(mask: np.ndarray, rng: np.random.Generator) -> None:
@@ -176,7 +176,8 @@ def main() -> None:
         json.dumps(meta, ensure_ascii=False, indent=2),
         encoding="utf-8",
     )
-    print(json.dumps(meta, ensure_ascii=False, indent=2))
+    print("\nРезультат (dataset_meta):")
+    print_as_list(meta)
 
 
 if __name__ == "__main__":

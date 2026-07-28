@@ -13,6 +13,7 @@ import tensorflow as tf
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from data import list_pairs, load_pair
+from io_utils import print_as_list
 from metrics import compute_numpy_metrics
 
 
@@ -48,7 +49,8 @@ def main() -> None:
     (args.out / "test_metrics.json").write_text(
         json.dumps(metrics, ensure_ascii=False, indent=2), encoding="utf-8"
     )
-    print(json.dumps(metrics, ensure_ascii=False, indent=2))
+    print("\nРезультат (test_metrics):")
+    print_as_list(metrics)
 
 
 if __name__ == "__main__":

@@ -3,10 +3,32 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Any
 
 import cv2
 import numpy as np
 from PIL import Image
+
+
+def print_as_list(data: Any, indent: int = 0) -> None:
+    """Печатает dict/list как маркированный список (удобно вместо сырого JSON)."""
+    prefix = "  " * indent
+    if isinstance(data, dict):
+        for key, value in data.items():
+            if isinstance(value, (dict, list)):
+                print(f"{prefix}- {key}:")
+                print_as_list(value, indent + 1)
+            else:
+                print(f"{prefix}- {key}: {value}")
+    elif isinstance(data, list):
+        for i, item in enumerate(data):
+            if isinstance(item, (dict, list)):
+                print(f"{prefix}- [{i}]:")
+                print_as_list(item, indent + 1)
+            else:
+                print(f"{prefix}- {item}")
+    else:
+        print(f"{prefix}- {data}")
 
 
 def imwrite_unicode(path: Path, image: np.ndarray) -> None:

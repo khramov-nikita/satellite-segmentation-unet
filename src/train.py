@@ -13,6 +13,7 @@ import tensorflow as tf
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from data import make_dataset, one_hot_masks
+from io_utils import print_as_list
 from metrics import dice_coef_metric, mean_iou_metric
 from model_unet import build_unet
 
@@ -113,7 +114,8 @@ def main() -> None:
     (args.out / "train_meta.json").write_text(
         json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8"
     )
-    print(json.dumps(meta, ensure_ascii=False, indent=2))
+    print("\nРезультат (train_meta):")
+    print_as_list(meta)
 
 
 if __name__ == "__main__":
