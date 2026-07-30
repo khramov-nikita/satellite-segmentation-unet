@@ -1,7 +1,25 @@
+# Python
 __pycache__/
 *.pyc
+*.pyo
 .venv/
 venv/
+.env
+
+# Model weights (large binaries)
 experiment/outputs/*.keras
+*.keras
 *.h5
+
+# Local / non-project artifacts
+cmd_output.txt
+План_курсового_проекта.md
+Искусственные нейронные сети. Книги/
+*.pdf
+
+# OS / IDE
 .DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.cursor/

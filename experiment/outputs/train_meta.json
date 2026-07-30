@@ -6,6 +6,6 @@
   "base_filters": 32,
   "optimizer": "Adam",
   "loss": "categorical_crossentropy",
-  "best_val_mean_iou": 0.814740777015686,
-  "best_val_accuracy": 0.9608586430549622
+  "best_val_mean_iou": 0.8454760313034058,
+  "best_val_accuracy": 0.9628494381904602
 }
