@@ -14,6 +14,8 @@ experiment/outputs/*.keras
 # Local / non-project artifacts
 cmd_output.txt
 План_курсового_проекта.md
+Курсовой_проект.md
+Материалы_для_вставки/
 Искусственные нейронные сети. Книги/
 *.pdf
 
